@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Square from "./Square";
 import useGridSize from "../../../hooks/useGridSize";
 import { levels } from "../../../utils/levels";
@@ -14,6 +14,8 @@ const Board = ({
 
   const colorRegions = levels[level].colorRegions;
 
+  const [isMouseDown, setIsMouseDown] = useState(false);
+
   return (
     <div
       className="board"
@@ -21,6 +23,8 @@ const Board = ({
         gridTemplateColumns: `repeat(${board.length}, ${gridSize})`,
         gridTemplateRows: `repeat(${board.length}, ${gridSize})`,
       }}
+      onMouseDown={() => setIsMouseDown(true)}
+      onMouseUp={() => setIsMouseDown(false)}
     >
       {board.map((row, rowIndex) =>
         row.map((square, colIndex) => (
@@ -34,7 +38,9 @@ const Board = ({
               handleClick(rowIndex, colIndex);
             }}
             onMouseOver={() => {
-              console.log("hovering over: " + rowIndex + ", " + colIndex);
+              if(isMouseDown) {
+                console.log("dragging over: " + rowIndex + ", " + colIndex);
+              }              
             }}
             level={level}
             isClashing={
