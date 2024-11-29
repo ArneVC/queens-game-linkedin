@@ -44,6 +44,7 @@ const Square = ({ row, col, value, region, onClick, onMouseOver, level, isClashi
       className={`square hover:brightness-75 ${borderClasses}`}
       onClick={onClick}
       onMouseOver={onMouseOver}
+      onDragStart={(e) => e.preventDefault()}
       style={{
         backgroundColor: regionColors[region],
         color: isClashing ? "red" : "black",
