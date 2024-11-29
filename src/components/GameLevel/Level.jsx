@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Board from "./components/Board";
 import { createEmptyBoard } from "../../utils/board";
@@ -47,6 +47,8 @@ const Level = ({ id, level }) => {
   const colorRegions = levels[level].colorRegions;
 
   const completed = isLevelCompleted(Number(id));
+
+  const [isMouseDown, setIsMouseDown] = useState(false);
 
   // Handle click on square
   const handleClick = (row, col) => {
@@ -288,6 +290,19 @@ const Level = ({ id, level }) => {
     setClashingQueens(clashingSet);
   }, [board]);
 
+  useEffect(() => {
+    const handleMouseDown = () => setIsMouseDown(true);
+    const handleMouseUp = () => setIsMouseDown(false);
+  
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseup", handleMouseUp);
+  
+    return () => {
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, []);  
+
   return (
     <div key={id} className="flex flex-col justify-center items-center pt-4">
       <div className="flex flex-col items-center">
@@ -353,6 +368,7 @@ const Level = ({ id, level }) => {
               board={board}
               handleClick={handleClick}
               level={level}
+              isMouseDown={isMouseDown}
               showClashingQueens={showClashingQueens}
               clashingQueens={clashingQueens}
             />
