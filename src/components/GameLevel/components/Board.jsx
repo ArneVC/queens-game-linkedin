@@ -30,7 +30,12 @@ const Board = ({
             col={colIndex}
             value={square}
             region={colorRegions[rowIndex][colIndex]}
-            onClick={() => handleClick(rowIndex, colIndex)}
+            onClick={() => {
+              handleClick(rowIndex, colIndex);
+            }}
+            onMouseOver={() => {
+              console.log("hovering over: " + rowIndex + ", " + colIndex);
+            }}
             level={level}
             isClashing={
               showClashingQueens &&

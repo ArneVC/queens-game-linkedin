@@ -4,7 +4,7 @@ import Cross from "./Cross";
 import { levels } from "../../../utils/levels";
 
 // Square component with color regions and toggling between 'X', 'Q', and empty
-const Square = ({ row, col, value, region, onClick, level, isClashing }) => {
+const Square = ({ row, col, value, region, onClick, onMouseOver, level, isClashing }) => {
   const boardSize = levels[level].size;
   const colorRegions = levels[level].colorRegions;
   const regionColors = levels[level].regionColors;
@@ -43,6 +43,7 @@ const Square = ({ row, col, value, region, onClick, level, isClashing }) => {
     <div
       className={`square hover:brightness-75 ${borderClasses}`}
       onClick={onClick}
+      onMouseOver={onMouseOver}
       style={{
         backgroundColor: regionColors[region],
         color: isClashing ? "red" : "black",
